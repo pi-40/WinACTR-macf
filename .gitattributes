@@ -1,8 +1,2 @@
-**/*.hhp linguist-vendored
-**/*.hhc linguist-vendored
-**/*.hhk linguist-vendored
-**/*.html linguist-documentation
-**/*.htm linguist-documentation
 **/*.cpp linguist-language=C++
 **/*.h linguist-language=C++
-**/*.hpp linguist-language=C++
