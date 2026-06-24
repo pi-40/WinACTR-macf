@@ -1,2 +1,3 @@
 # WinACTR-macf
 Welcome to WinACTR .This is a simplified version of Microsoft Agent. To compile a file, make a folder. Make a folder inside the folder you made, and make sure it is named "act".Act 1: IdleAct 2: OtherAnd so on.To make the engine actually take the file you made, you need to put an .ini file inside. It should look like "1s" or any amount of seconds you want. We have a template built into the software; use that or create one. I recommend putting multiple images (.bmp, .png, .webp) inside of Act 2, or any act, to make it look smooth. 
+<img width="1918" height="1016" alt="Screenshot 2026-06-23 202131" src="https://github.com/user-attachments/assets/b309bbf9-4218-4b6e-8961-f9dab5b015fe" />
