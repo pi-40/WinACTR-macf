@@ -1,1 +1,82 @@
-#ifndef RESOURCE_H#define RESOURCE_H#pragma comment(linker, "/SUBSYSTEM:WINDOWS")#pragma comment(lib, "comctl32.lib")#pragma comment(lib, "Ole32.lib")#pragma comment(lib, "gdiplus.lib")#pragma comment(lib, "shlwapi.lib")#pragma comment(lib, "windowscodecs.lib")#pragma comment(lib, "uxtheme.lib")#include <windows.h>#include <commctrl.h>#include <shobjidl.h>#include <gdiplus.h>#include <shlwapi.h>#include <wincodec.h>#include <uxtheme.h>#include #include #include namespace fs = std::filesystem;#define ID_TABCTRL         1001#define ID_COMP_BROWSE     1002#define ID_COMP_COMPILE    1003#define ID_LAUNCH_LOAD     1004#define ID_DECOMP_BROWSE   1005#define ID_DECOMP_EXTRACT  1006extern HWND g_hMainWnd;extern HWND g_hDisplayWnd;extern HWND g_hTab;extern HWND g_hCompLabel;extern HWND g_hCompPathEdit;extern HWND g_hCompBrowseBtn;extern HWND g_hCompCompileBtn;extern HWND g_hStatusText;extern HWND g_hLaunchLoadBtn;extern HWND g_hDecompLabel;extern HWND g_hDecompPathEdit;extern HWND g_hDecompBrowseBtn;extern HWND g_hDecompExtractBtn;extern WNDPROC g_OrgTabProc;extern WNDPROC g_OrgBtnProc;struct FrameInfo {Gdiplus::Bitmap* bitmap = nullptr;int parent_act = 1;};struct MacfData {int delay_seconds = 1;std::vector frames;};extern MacfData g_Agent;extern size_t g_CurrentFrame;extern bool g_IsRunning;extern ULONG_PTR g_GdiplusToken;extern IWICImagingFactory* g_pWICFactory;extern const wchar_t DISPLAY_CLASS_NAME[];void ClearActiveBitmaps();void UpdateTabVisibility(int selectedTab);std::wstring BrowseFolderModern(HWND hwndOwner);std::wstring BrowseMacfFileModern(HWND hwndOwner);int ParseIniValue(const fs::path& folder_path);void CompileMacf(HWND hwnd, const std::wstring& source_folder_str);void DecompileMacf(HWND hwnd, const std::wstring& macf_file_path, const std::wstring& export_dir_str);Gdiplus::Bitmap* LoadFromWICTranslation(::IStream* pStream);bool LoadMacfFile(const std::wstring& filepath);void ApplyAdaptiveTimer(HWND hwnd, size_t frameIdx);LRESULT CALLBACK BlueControlSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);LRESULT CALLBACK TabSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);#endif
+#ifndef RESOURCE_H
+#define RESOURCE_H
+
+#pragma comment(linker, "/SUBSYSTEM:WINDOWS")
+#pragma comment(lib, "comctl32.lib")
+#pragma comment(lib, "Ole32.lib")
+#pragma comment(lib, "gdiplus.lib")
+#pragma comment(lib, "shlwapi.lib")
+#pragma comment(lib, "windowscodecs.lib")
+#pragma comment(lib, "uxtheme.lib")
+
+#include <windows.h>
+#include <commctrl.h>
+#include <shobjidl.h> 
+#include <gdiplus.h>
+#include <shlwapi.h>
+#include <wincodec.h>
+#include <uxtheme.h>
+#include <string>
+#include <vector>
+#include <filesystem>
+
+namespace fs = std::filesystem;
+
+#define ID_TABCTRL         1001
+#define ID_COMP_BROWSE     1002
+#define ID_COMP_COMPILE    1003
+#define ID_LAUNCH_LOAD     1004
+#define ID_DECOMP_BROWSE   1005
+#define ID_DECOMP_EXTRACT  1006
+
+extern HWND g_hMainWnd;
+extern HWND g_hDisplayWnd;
+extern HWND g_hTab;
+
+extern HWND g_hCompLabel;
+extern HWND g_hCompPathEdit;
+extern HWND g_hCompBrowseBtn;
+extern HWND g_hCompCompileBtn;
+extern HWND g_hStatusText;
+extern HWND g_hLaunchLoadBtn;
+extern HWND g_hDecompLabel;
+extern HWND g_hDecompPathEdit;
+extern HWND g_hDecompBrowseBtn;
+extern HWND g_hDecompExtractBtn;
+
+extern WNDPROC g_OrgTabProc;
+extern WNDPROC g_OrgBtnProc;
+
+struct FrameInfo {
+    Gdiplus::Bitmap* bitmap = nullptr;
+    int parent_act = 1;
+};
+
+struct MacfData {
+    int delay_seconds = 1;
+    std::vector<FrameInfo> frames;
+};
+
+extern MacfData g_Agent;
+extern size_t g_CurrentFrame;
+extern bool g_IsRunning;
+extern ULONG_PTR g_GdiplusToken;
+extern IWICImagingFactory* g_pWICFactory;
+
+extern const wchar_t DISPLAY_CLASS_NAME[];
+
+void ClearActiveBitmaps();
+void UpdateTabVisibility(int selectedTab);
+std::wstring BrowseFolderModern(HWND hwndOwner);
+std::wstring BrowseMacfFileModern(HWND hwndOwner);
+int ParseIniValue(const fs::path& folder_path);
+void CompileMacf(HWND hwnd, const std::wstring& source_folder_str);
+void DecompileMacf(HWND hwnd, const std::wstring& macf_file_path, const std::wstring& export_dir_str);
+Gdiplus::Bitmap* LoadFromWICTranslation(::IStream* pStream);
+bool LoadMacfFile(const std::wstring& filepath);
+void ApplyAdaptiveTimer(HWND hwnd, size_t frameIdx);
+
+LRESULT CALLBACK BlueControlSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+LRESULT CALLBACK TabSubclassProc(HWND hwnd, UINT uMsg, WPARAM wParam, LPARAM lParam);
+
+#endif
